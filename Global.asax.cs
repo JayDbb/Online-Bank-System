@@ -16,6 +16,11 @@ namespace Online_Bank_System
             // Code that runs on application startup
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            using (var context = new MyDbContext())
+            {
+                context.Database.Initialize(force: false);
+            }
         }
     }
 }

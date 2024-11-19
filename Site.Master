@@ -15,8 +15,16 @@
     <webopt:bundlereference runat="server" path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
 </head>
-<body>
+    <!-- 
+        primary : #c93853
+        secondary:  #7c071c
+        -->
+<body style='font-family: "Inter Tight", serif;'>
     <form runat="server">
         <asp:ScriptManager runat="server">
             <Scripts>
@@ -49,6 +57,7 @@
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/">Home</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/About">About</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Contact">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Add-Account">Add Flow/Sagicor Account</a></li>
                     </ul>
                 </div>
             </div>
