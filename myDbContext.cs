@@ -60,6 +60,8 @@ namespace Online_Bank_System
     {
         public int ID { get; set; } // Primary Key
         public string Type { get; set; } // Type of account (e.g., Flow, Sagicor)
+        public string Password { get; set; } 
+        public bool IsHidden { get; set; } // Allows the account to be hidden when removed
         public decimal Balance { get; set; }
 
         // Foreign Key for User

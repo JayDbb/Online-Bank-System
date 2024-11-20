@@ -17,9 +17,13 @@ namespace Online_Bank_System
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
+
             using (var context = new MyDbContext())
             {
+                
+                
                 context.Database.Initialize(force: false);
+                DatabaseSeeder.SeedTestUser();
             }
         }
     }
