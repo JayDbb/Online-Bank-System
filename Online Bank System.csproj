@@ -189,7 +189,9 @@
     <Content Include="Scripts\WebForms\WebForms.js" />
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
+    <Content Include="Send-Linked-Account.aspx" />
     <Content Include="Site.Master" />
+    <Content Include="Top-Up.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <None Include="Web References\myWebServiceRef\MyWebService.disco" />
     <Content Include="Web.config" />
@@ -255,6 +257,13 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Send-Linked-Account.aspx.cs">
+      <DependentUpon>Send-Linked-Account.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Send-Linked-Account.aspx.designer.cs">
+      <DependentUpon>Send-Linked-Account.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -268,6 +277,13 @@
     </Compile>
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Top-Up.aspx.cs">
+      <DependentUpon>Top-Up.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Top-Up.aspx.designer.cs">
+      <DependentUpon>Top-Up.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
