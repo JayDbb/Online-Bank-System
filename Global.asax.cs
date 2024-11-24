@@ -21,7 +21,7 @@ namespace Online_Bank_System
             using (var context = new MyDbContext())
             {
                 
-                
+                context.Database.CreateIfNotExists();
                 context.Database.Initialize(force: false);
                 DatabaseSeeder.SeedTestUser();
             }
