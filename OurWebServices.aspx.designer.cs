@@ -33,13 +33,13 @@ namespace Online_Bank_System
         protected global::System.Web.UI.WebControls.DropDownList ddlRecipientAccount;
 
         /// <summary>
-        /// lblRecipientBalance control.
+        /// lblSenderBalance control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblRecipientBalance;
+        protected global::System.Web.UI.WebControls.Label lblSenderBalance;
 
         /// <summary>
         /// txtReceiverAccountID control.

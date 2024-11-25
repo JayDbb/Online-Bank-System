@@ -18,7 +18,7 @@ namespace Online_Bank_System
         protected void Page_Load(object sender, EventArgs e)
         {
             var dbContext = new MyDbContext();
-            var OwnerAccount = dbContext.Users.FirstOrDefault(a => a.Email == User.Identity.Name); // Assuming "Primary" indicates the owner's main account
+            var OwnerAccount = dbContext.Users.FirstOrDefault(a => a.Email == User.Identity.Name); 
             RecipientAccounts = dbContext.Accounts.Where(a => a.UserId == OwnerAccount.ID);
             myWebService = new MyWebService();
             if (!IsPostBack)
@@ -26,8 +26,6 @@ namespace Online_Bank_System
 
                 if (!RecipientAccounts.Any())
                 {
-                    //ScriptManager.RegisterStartupScript(this, GetType(), "alert", "alert('No accounts available for the top-up.');", true);
-                    //var acc = { ID = "0" TypeWithID = "No Accounts" };
                     ddlRecipientAccount.DataSource = "No Account";
                 }
 
@@ -36,36 +34,6 @@ namespace Online_Bank_System
             }
         }
 
-        //protected void btnCheckAccount_Click(object sender, EventArgs e)
-        //{
-        //    int accountID;
-        //    if (int.TryParse(txtAccountID.Text, out accountID))
-        //    {
-        //        bool accountExists = myWebService.DoesAccountExist(accountID);
-        //        lblCheckAccountResult.Text = accountExists ? "Account exists." : "Account does not exist.";
-        //    }
-        //    else
-        //    {
-        //        lblCheckAccountResult.Text = "Invalid Account ID.";
-        //    }
-        //}
-
-        // Handle Add Account
-        //protected void btnAddAccount_Click(object sender, EventArgs e)
-        //{
-        //    int accountID;
-        //    string password = txtPassword.Text;
-
-        //    if (int.TryParse(txtAddAccountID.Text, out accountID))
-        //    {
-        //        bool success = myWebService.AddAccount(accountID, password);
-        //        lblAddAccountResult.Text = success ? "Account added successfully." : "Failed to add account.";
-        //    }
-        //    else
-        //    {
-        //        lblAddAccountResult.Text = "Invalid Account ID.";
-        //    }
-        //}
 
         private void BindSenderAccount()
         {
@@ -93,11 +61,11 @@ namespace Online_Bank_System
             if (int.TryParse(ddlRecipientAccount.SelectedValue, out int accountId))
             {
                 var recipientAccount = RecipientAccounts.FirstOrDefault(a => a.ID == accountId);
-                lblRecipientBalance.Text = recipientAccount != null ? recipientAccount.Balance.ToString("C") : "0.00";
+                lblSenderBalance.Text = recipientAccount != null ? recipientAccount.Balance.ToString("C") : "0.00";
             }
             else
             {
-                lblRecipientBalance.Text = "0.00";
+                lblSenderBalance.Text = "0.00";
             }
         }
 
@@ -114,6 +82,43 @@ namespace Online_Bank_System
             {
                 bool paymentSuccess = myWebService.SubmitPayment(senderAccountID, receiverAccountID, amount, senderPassword);
                 lblSubmitPaymentResult.Text = paymentSuccess ? "Payment successful." : "Payment failed.";
+
+                var dbContext = new MyDbContext();
+                var recipientAccount = dbContext.Accounts.FirstOrDefault(x=> x.ID == receiverAccountID);
+                var senderAccount = dbContext.Accounts.FirstOrDefault(x=> x.ID == senderAccountID);
+
+                // Get form values for the modal
+                string accountNumber = senderAccountID.ToString();
+                string recipientAccID = receiverAccountID.ToString();
+                string senderAccType = senderAccount.Type;
+                string recipientAccType = recipientAccount.Type;
+                decimal senderBalance = senderAccount.Balance;
+                DateTime date = DateTime.Now;
+                txtAmount.Text = "0";
+
+                // Use JavaScript to show the modal and populate its content
+                string script = $@"
+
+                $('#modalAccountName').text('{senderAccType}');
+                $('#modalAccountNumber').text('{accountNumber}');
+                $('#modalRecipientAccount').text('{recipientAccount.Type}');         
+                $('#modalSenderAccount').text('{senderAccount.Type}');  
+                $('#modalRecipAccNum').text('{recipientAccID}');
+
+
+                $('#modalAmount').text('{amount.ToString("C")}');
+                $('#modalSenderBalance').text('{senderBalance.ToString("C")}');       
+                $('#date').text('{date.Day}/{date.Month}/{date.Year}');
+
+                $('#transactionModal').modal('show');
+
+                $('#transactionModal').on('hidden.bs.modal', function () {{
+                    window.location.href = '/Accounts';
+                }});
+                ";
+
+                ClientScript.RegisterStartupScript(this.GetType(), "showModal", script, true);
+
             }
             else
             {

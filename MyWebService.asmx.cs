@@ -4,6 +4,7 @@ using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
+using System.Web.UI;
 
 namespace Online_Bank_System
 {
@@ -38,8 +39,9 @@ namespace Online_Bank_System
         public bool TopUp(int recipientAccountId, int OwnerAccountID, decimal topUpAmount)
         {
             User OwnerAccount = dbContext.Users.FirstOrDefault(a => a.ID == OwnerAccountID);
-            Account recipientAccount = dbContext.Accounts.FirstOrDefault(a => a.UserId == recipientAccountId);
+            Account recipientAccount = dbContext.Accounts.FirstOrDefault(a => a.ID == recipientAccountId);
 
+                //ScriptManager.RegisterStartupScript(this, GetType(), "alert", "alert('TOPPP');", true);
 
             if (recipientAccount == null)
             {
@@ -49,7 +51,6 @@ namespace Online_Bank_System
             if (OwnerAccount.Balance < topUpAmount)
             {
                 //topupValidator.ErrorMessage = "Insufficient balance in the sender account.";
-                //ScriptManager.RegisterStartupScript(this, GetType(), "alert", "alert('');", true);
                 return false;
             }
 
@@ -57,15 +58,17 @@ namespace Online_Bank_System
             OwnerAccount.Balance -= topUpAmount;
             recipientAccount.Balance += topUpAmount;
 
+
             // Record the transaction
-            var transaction = new Transaction
+            var transaction = new BankTransaction
             {
                 Amount = topUpAmount,
                 Date = DateTime.Now,
                 SenderAccountID = OwnerAccount.ID,
                 ReceiverAccountID = recipientAccount.ID
             };
-            dbContext.Transactions.Add(transaction);
+
+            dbContext.BankTransactions.Add(transaction);
 
             // Save changes
             dbContext.SaveChanges();
@@ -131,9 +134,9 @@ namespace Online_Bank_System
             //Add to receiver account
             receiverAccount.Balance += amount;
 
-            //Save changes to both accounts
-            dbContext.Accounts.AddOrUpdate(senderAccount);
-            dbContext.Accounts.AddOrUpdate(receiverAccount);
+            ////Save changes to both accounts
+            //dbContext.Accounts.AddOrUpdate(senderAccount);
+            //dbContext.Accounts.AddOrUpdate(receiverAccount);
 
             //Transaction record
             Transaction transaction = new Transaction

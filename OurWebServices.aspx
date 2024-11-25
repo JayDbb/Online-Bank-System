@@ -11,14 +11,6 @@
                 </div>
                 <div class="card-body">
 
-                    <!-- Check Account Section -->
-
-
-
-
-                    <!-- Add Account Section -->
-
-
                     <!-- Submit Payment Section -->
                     <div class="form-group mb-3">
                         <h3 class="text-danger"></h3>
@@ -35,7 +27,7 @@
                                     OnSelectedIndexChanged="ddlRecipientAccount_SelectedIndexChanged">
                                 </asp:DropDownList>
                                 <p class="mt-2 text-muted">Balance:
-                                    <asp:Label ID="lblRecipientBalance" runat="server" Text="0.00"></asp:Label></p>
+                                    <asp:Label ID="lblSenderBalance" runat="server" Text="0.00"></asp:Label></p>
                             </div>
 
                             <asp:TextBox ID="txtReceiverAccountID" runat="server" placeholder="Receiver Account ID" CssClass="form-control ml-2 mb-4"  Height="38px"/>
@@ -54,5 +46,28 @@
         </div>
 
     </div>
+                <!-- Transaction Modal -->
+<div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #c93853;">
+                <h5 class="modal-title text-white" id="transactionModalLabel">Transaction Reciept</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Account Type: <span id="modalAccountName"></span></p>
+                <p>Account Balance: <span id="modalSenderBalance"></span></p>
+                <p>Account Number: <span id="modalAccountNumber"></span></p>
+                <p>Recipient Account Type: <span id="modalSenderAccount"></span></p>
+                <p>Recipient Account Number: <span id="modalRecipAccNum"></span></p>
+                <p>Amount Sent: <span id="modalAmount"></span></p>
+                <p>Date of Top-Up: <span id="date"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 </asp:Content>

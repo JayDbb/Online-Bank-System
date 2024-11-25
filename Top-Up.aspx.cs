@@ -21,7 +21,7 @@ namespace Online_Bank_System
 
             // Fetch the owner (logged-in user) and accounts (Replace 1 with the logged-in User ID)
             //int userId = dbContext; // Replace this with dynamic user identification
-            OwnerAccount = dbContext.Users.FirstOrDefault(a => a.Email == User.Identity.Name); // Assuming "Primary" indicates the owner's main account
+            OwnerAccount = dbContext.Users.FirstOrDefault(a => a.Email == User.Identity.Name); 
             RecipientAccounts = dbContext.Accounts.Where(a => a.UserId == OwnerAccount.ID);
             if (!IsPostBack)
             {
@@ -121,32 +121,45 @@ namespace Online_Bank_System
                 return;
             }
 
-            // Deduct and credit balances
-            //OwnerAccount.Balance -= topUpAmount;
-            //recipientAccount.Balance += topUpAmount;
 
-            //// Record the transaction
-            //var transaction = new Transaction
-            //{
-            //    Amount = topUpAmount,
-            //    Date = DateTime.Now,
-            //    SenderAccountID = OwnerAccount.ID,
-            //    ReceiverAccountID = recipientAccount.ID
-            //};
-            //dbContext.Transactions.Add(transaction);
+            ws.TopUp(recipientAccountId, OwnerAccount.ID, (decimal)topUpAmount);
 
-            // Save changes
-            //dbContext.SaveChanges();
-
-            ws.TopUp(recipientAccountId, OwnerAccount.ID, topUpAmount);
+            OwnerAccount.Balance -= topUpAmount; 
+            recipientAccount.Balance += topUpAmount;
 
             // Update balances on UI
             lblSenderBalance.Text = OwnerAccount.Balance.ToString("C");
             lblRecipientBalance.Text = recipientAccount.Balance.ToString("C");
+  
 
+            // Get form values for the modal
+            string accountName = AccountName.Text;
+            string accountNumber = AccID.Text;
+            string recipientBalance = lblRecipientBalance.Text;
+            string amount = txtAmount.Text;
+            DateTime date = DateTime.Now;
+            string senderBalance = lblSenderBalance.Text;
             txtAmount.Text = "0";
 
-            Response.Redirect("/");
+            // Use JavaScript to show the modal and populate its content
+            string script = $@"
+                $('#modalAccountName').text('{accountName}');
+                $('#modalAccountNumber').text('{accountNumber}');
+                $('#modalRecipientAccount').text('{recipientAccount.Type}');
+                $('#modalRecipientBalance').text('{recipientAccount.Balance.ToString("C")}');
+                $('#modalAmount').text('{amount}');
+                $('#modalSenderBalance').text('{OwnerAccount.Balance.ToString("C")}');       
+                $('#date').text('{date.Day}/{date.Month}/{date.Year}');
+
+                $('#transactionModal').modal('show');
+
+                $('#transactionModal').on('hidden.bs.modal', function () {{
+                    window.location.href = '/Accounts';
+                }});
+                ";
+
+            ClientScript.RegisterStartupScript(this.GetType(), "showModal", script, true);
+
 
             //ScriptManager.RegisterStartupScript(this, GetType(), "alert", "alert('Top-up successful!');", true);
         }

@@ -15,6 +15,7 @@ namespace Online_Bank_System
         public DbSet<User> Users { get; set; }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<BankTransaction> BankTransactions { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -24,6 +25,22 @@ namespace Online_Bank_System
                 .HasRequired(a => a.User)
                 .WithMany(u => u.Accounts)
                 .HasForeignKey(a => a.UserId);
+
+            // Configure Transaction -> User relationship
+            modelBuilder.Entity<BankTransaction>()
+                .HasRequired(a => a.SenderAccount)
+                .WithMany(u => u.SentTransactions)
+                .HasForeignKey(a => a.SenderAccountID)
+                .WillCascadeOnDelete(false); // Disable cascading delete for SenderAccount
+
+
+            // Configure Transaction -> Account relationship
+            modelBuilder.Entity<BankTransaction>()
+               .HasRequired(a => a.ReceiverAccount)
+               .WithMany(u => u.ReceivedTransactionsBank)
+               .HasForeignKey(a => a.ReceiverAccountID)
+                .WillCascadeOnDelete(false); // Disable cascading delete for SenderAccount
+
 
             // Configure Transaction -> Account relationships
             modelBuilder.Entity<Transaction>()
@@ -53,6 +70,8 @@ namespace Online_Bank_System
 
         // Navigation Property
         public ICollection<Account> Accounts { get; set; }
+        public ICollection<BankTransaction> SentTransactions { get; set; }
+
     }
 
 
@@ -71,6 +90,7 @@ namespace Online_Bank_System
         // Navigation Property for Transactions
         public ICollection<Transaction> SentTransactions { get; set; }
         public ICollection<Transaction> ReceivedTransactions { get; set; }
+        public ICollection<BankTransaction> ReceivedTransactionsBank { get; set; }
     }
 
     public class Transaction
@@ -82,6 +102,21 @@ namespace Online_Bank_System
         // Foreign Key for Sender Account
         public int SenderAccountID { get; set; }
         public Account SenderAccount { get; set; }
+
+        // Foreign Key for Receiver Account
+        public int ReceiverAccountID { get; set; }
+        public Account ReceiverAccount { get; set; }
+    }
+
+    public class BankTransaction
+    {
+        public int ID { get; set; } // Primary Key
+        public decimal Amount { get; set; }
+        public DateTime Date { get; set; }
+
+        // Foreign Key for Sender Account
+        public int SenderAccountID { get; set; }
+        public User SenderAccount { get; set; }
 
         // Foreign Key for Receiver Account
         public int ReceiverAccountID { get; set; }

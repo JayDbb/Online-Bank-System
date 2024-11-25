@@ -298,6 +298,10 @@
     <Compile Include="Migrations\202411192314508_UpdateDB.Designer.cs">
       <DependentUpon>202411192314508_UpdateDB.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202411251908401_fixCascadeBankTransact.cs" />
+    <Compile Include="Migrations\202411251908401_fixCascadeBankTransact.Designer.cs">
+      <DependentUpon>202411251908401_fixCascadeBankTransact.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="myDbContext.cs" />
@@ -392,6 +396,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202411192314508_UpdateDB.resx">
       <DependentUpon>202411192314508_UpdateDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411251908401_fixCascadeBankTransact.resx">
+      <DependentUpon>202411251908401_fixCascadeBankTransact.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
