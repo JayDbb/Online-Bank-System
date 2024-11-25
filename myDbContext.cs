@@ -49,7 +49,7 @@ namespace Online_Bank_System
         public int ID { get; set; } // Primary Key
         public string Name { get; set; }
         public string Email { get; set; }
-        public decimal Balance { get; set; } // Total balance for all accounts
+        public decimal Balance { get; set; } // balance of bank account
 
         // Navigation Property
         public ICollection<Account> Accounts { get; set; }

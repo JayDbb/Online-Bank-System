@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Online_Bank_System.myWebServiceRef;
+using System;
 using System.Linq;
 using System.Security.Principal;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -18,16 +20,17 @@ namespace Online_Bank_System
             dbContext = new MyDbContext();
 
             // Fetch the owner (logged-in user) and accounts (Replace 1 with the logged-in User ID)
-            int userId = 1; // Replace this with dynamic user identification
-            OwnerAccount = dbContext.Users.FirstOrDefault(a => a.ID == userId); // Assuming "Primary" indicates the owner's main account
-            RecipientAccounts = dbContext.Accounts.Where(a => a.UserId == userId);
+            //int userId = dbContext; // Replace this with dynamic user identification
+            OwnerAccount = dbContext.Users.FirstOrDefault(a => a.Email == User.Identity.Name); // Assuming "Primary" indicates the owner's main account
+            RecipientAccounts = dbContext.Accounts.Where(a => a.UserId == OwnerAccount.ID);
             if (!IsPostBack)
             {
 
-                if (OwnerAccount == null || !RecipientAccounts.Any())
+                if (!RecipientAccounts.Any())
                 {
-                    ScriptManager.RegisterStartupScript(this, GetType(), "alert", "alert('No accounts available for the top-up.');", true);
-                    return;
+                    //ScriptManager.RegisterStartupScript(this, GetType(), "alert", "alert('No accounts available for the top-up.');", true);
+                    //var acc = { ID = "0" TypeWithID = "No Accounts" };
+                    ddlRecipientAccount.DataSource = "No Account";
                 }
 
                 // Bind data to dropdowns
@@ -40,6 +43,8 @@ namespace Online_Bank_System
         {
             //ddlSenderAccount.Items.Clear();
             //ddlSenderAccount.Items.Add(new ListItem(OwnerAccount.Type + " - Balance: " + OwnerAccount.Balance.ToString("C"), OwnerAccount.ID.ToString()));
+            //ScriptManager.RegisterStartupScript(this, GetType(), "alert", "alert('No accounts available for the top-up."+ OwnerAccount.Name +" ," + OwnerAccount.ID.ToString() + "');", true);
+
             AccID.Text = OwnerAccount.ID.ToString();
             AccountName.Text = OwnerAccount.Name;
             lblSenderBalance.Text = OwnerAccount.Balance.ToString("C");
@@ -89,39 +94,51 @@ namespace Online_Bank_System
             }
 
             int recipientAccountId = int.Parse(ddlRecipientAccount.SelectedValue);
+
+            myWebServiceRef.MyWebService ws = new myWebServiceRef.MyWebService();
+
+            
+
             var recipientAccount = dbContext.Accounts.FirstOrDefault(a => a.ID == recipientAccountId);
 
-
+            
             if (recipientAccount == null)
             {
                 topupValidator.ErrorMessage = "Recipient account not found.";
-                //ScriptManager.RegisterStartupScript(this, GetType(), "alert", "alert('R.');", true);
                 return;
             }
 
+
+
             if (OwnerAccount.Balance < topUpAmount)
             {
+                //ScriptManager.RegisterStartupScript(this, GetType(), "alert", "alert('R." + OwnerAccount.Balance + ", " + topUpAmount + "');", true);
+                //cvAmount.Visible = true;
+                //topupValidator
                 topupValidator.ErrorMessage = "Insufficient balance in the sender account.";
+                topupValidator.IsValid = false;
                 //ScriptManager.RegisterStartupScript(this, GetType(), "alert", "alert('');", true);
                 return;
             }
 
             // Deduct and credit balances
-            OwnerAccount.Balance -= topUpAmount;
-            recipientAccount.Balance += topUpAmount;
+            //OwnerAccount.Balance -= topUpAmount;
+            //recipientAccount.Balance += topUpAmount;
 
-            // Record the transaction
-            var transaction = new Transaction
-            {
-                Amount = topUpAmount,
-                Date = DateTime.Now,
-                SenderAccountID = OwnerAccount.ID,
-                ReceiverAccountID = recipientAccount.ID
-            };
-            dbContext.Transactions.Add(transaction);
+            //// Record the transaction
+            //var transaction = new Transaction
+            //{
+            //    Amount = topUpAmount,
+            //    Date = DateTime.Now,
+            //    SenderAccountID = OwnerAccount.ID,
+            //    ReceiverAccountID = recipientAccount.ID
+            //};
+            //dbContext.Transactions.Add(transaction);
 
             // Save changes
-            dbContext.SaveChanges();
+            //dbContext.SaveChanges();
+
+            ws.TopUp(recipientAccountId, OwnerAccount.ID, topUpAmount);
 
             // Update balances on UI
             lblSenderBalance.Text = OwnerAccount.Balance.ToString("C");

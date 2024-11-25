@@ -31,7 +31,11 @@ namespace Online_Bank_System.myWebServiceRef {
         
         private System.Threading.SendOrPostCallback DoesAccountExistOperationCompleted;
         
+        private System.Threading.SendOrPostCallback TopUpOperationCompleted;
+        
         private System.Threading.SendOrPostCallback AddAccountOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback SubmitPaymentOperationCompleted;
         
         private bool useDefaultCredentialsSetExplicitly;
         
@@ -75,7 +79,13 @@ namespace Online_Bank_System.myWebServiceRef {
         public event DoesAccountExistCompletedEventHandler DoesAccountExistCompleted;
         
         /// <remarks/>
+        public event TopUpCompletedEventHandler TopUpCompleted;
+        
+        /// <remarks/>
         public event AddAccountCompletedEventHandler AddAccountCompleted;
+        
+        /// <remarks/>
+        public event SubmitPaymentCompletedEventHandler SubmitPaymentCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/DoesAccountExist", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -107,6 +117,39 @@ namespace Online_Bank_System.myWebServiceRef {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/TopUp", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public bool TopUp(int recipientAccountId, int OwnerAccountID, decimal topUpAmount) {
+            object[] results = this.Invoke("TopUp", new object[] {
+                        recipientAccountId,
+                        OwnerAccountID,
+                        topUpAmount});
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void TopUpAsync(int recipientAccountId, int OwnerAccountID, decimal topUpAmount) {
+            this.TopUpAsync(recipientAccountId, OwnerAccountID, topUpAmount, null);
+        }
+        
+        /// <remarks/>
+        public void TopUpAsync(int recipientAccountId, int OwnerAccountID, decimal topUpAmount, object userState) {
+            if ((this.TopUpOperationCompleted == null)) {
+                this.TopUpOperationCompleted = new System.Threading.SendOrPostCallback(this.OnTopUpOperationCompleted);
+            }
+            this.InvokeAsync("TopUp", new object[] {
+                        recipientAccountId,
+                        OwnerAccountID,
+                        topUpAmount}, this.TopUpOperationCompleted, userState);
+        }
+        
+        private void OnTopUpOperationCompleted(object arg) {
+            if ((this.TopUpCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.TopUpCompleted(this, new TopUpCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/AddAccount", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         public bool AddAccount(int AccountID, string Password) {
             object[] results = this.Invoke("AddAccount", new object[] {
@@ -134,6 +177,41 @@ namespace Online_Bank_System.myWebServiceRef {
             if ((this.AddAccountCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.AddAccountCompleted(this, new AddAccountCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/SubmitPayment", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public bool SubmitPayment(int senderAccountID, int receiverAccountID, decimal amount, string senderPassword) {
+            object[] results = this.Invoke("SubmitPayment", new object[] {
+                        senderAccountID,
+                        receiverAccountID,
+                        amount,
+                        senderPassword});
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void SubmitPaymentAsync(int senderAccountID, int receiverAccountID, decimal amount, string senderPassword) {
+            this.SubmitPaymentAsync(senderAccountID, receiverAccountID, amount, senderPassword, null);
+        }
+        
+        /// <remarks/>
+        public void SubmitPaymentAsync(int senderAccountID, int receiverAccountID, decimal amount, string senderPassword, object userState) {
+            if ((this.SubmitPaymentOperationCompleted == null)) {
+                this.SubmitPaymentOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSubmitPaymentOperationCompleted);
+            }
+            this.InvokeAsync("SubmitPayment", new object[] {
+                        senderAccountID,
+                        receiverAccountID,
+                        amount,
+                        senderPassword}, this.SubmitPaymentOperationCompleted, userState);
+        }
+        
+        private void OnSubmitPaymentOperationCompleted(object arg) {
+            if ((this.SubmitPaymentCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.SubmitPaymentCompleted(this, new SubmitPaymentCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -184,6 +262,32 @@ namespace Online_Bank_System.myWebServiceRef {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    public delegate void TopUpCompletedEventHandler(object sender, TopUpCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class TopUpCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal TopUpCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
     public delegate void AddAccountCompletedEventHandler(object sender, AddAccountCompletedEventArgs e);
     
     /// <remarks/>
@@ -195,6 +299,32 @@ namespace Online_Bank_System.myWebServiceRef {
         private object[] results;
         
         internal AddAccountCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    public delegate void SubmitPaymentCompletedEventHandler(object sender, SubmitPaymentCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class SubmitPaymentCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal SubmitPaymentCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }

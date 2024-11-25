@@ -220,9 +220,9 @@
     <Content Include="Scripts\jquery-3.7.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.7.0.min.map" />
     <Content Include="Site.Mobile.Master" />
-    <None Include="Web References\myWebServiceRef\MyWebService.disco" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="View_Account.aspx" />
+    <None Include="Web References\myWebServiceRef\MyWebService.disco" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
   </ItemGroup>
@@ -385,10 +385,10 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="https://localhost:44307/MyWebService.asmx%3fop=AddAccount">
+    <WebReferenceUrl Include="https://localhost:44307/MyWebService.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\myWebServiceRef\</RelPath>
-      <UpdateFromURL>https://localhost:44307/MyWebService.asmx%3fop=AddAccount</UpdateFromURL>
+      <UpdateFromURL>https://localhost:44307/MyWebService.asmx</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>

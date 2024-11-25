@@ -71,6 +71,16 @@ a:hover {
         <hr />
         <asp:ValidationSummary runat="server" CssClass="text-danger" />
         <div class="row">
+            <asp:Label runat="server" AssociatedControlID="Name"  CssClass="col-md-2 col-form-label">Name</asp:Label>
+            <div class="col-md-10">
+
+                <asp:TextBox ID="Name" runat="server" CssClass="form-control" />
+        
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="Name"
+                    CssClass="text-danger" ErrorMessage="The Name field is required." />
+            </div>
+        </div>
+        <div class="row">
             <asp:Label runat="server" AssociatedControlID="Email"  CssClass="col-md-2 col-form-label">Email</asp:Label>
             <div class="col-md-10">
 

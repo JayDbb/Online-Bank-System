@@ -12,11 +12,11 @@
                         <asp:Panel ID="PanelTopUp" runat="server">
                             <div class="form-group mb-3">
                                <div class="d-flex" style="margin-bottom: -6px; align-items:baseline">
-                                <h2 class="m-0 mr-1"> <asp:Label ID="AccountName" runat="server" Text="0.00"></asp:Label> </h2>
-                                   <p class="text-muted"> Account Number #<asp:Label ID="AccID" runat="server" Text="0"></asp:Label></p>
+                                <h2 class="m-0 mr-1"> <asp:Label ID="AccountName" runat="server" Text="User"></asp:Label> </h2>
+                                   <p class="text-muted mx-1"> Account Number #<asp:Label ID="AccID" runat="server" Text="0"></asp:Label></p>
 
                                </div>
-                                <i class="m-0 p-1" style="border:1px solid;border-radius:8px;color:white;background-color:#c93853;border-color: #7c071c;">Balance: <asp:Label ID="lblSenderBalance" runat="server" Text="0.00"></asp:Label></i>
+                                <i class="m-0 p-1" style="border:1px solid;border-radius:8px;color:white;background-color:#c93853;border-color: #7c071c;">Bank Balance: <asp:Label ID="lblSenderBalance" runat="server" Text="0.00"></asp:Label></i>
                             </div>
                             <hr style="width:50%" />
                             <div class="form-group mb-3">
@@ -50,7 +50,8 @@
                                     ErrorMessage="Please enter a valid amount." />
                             </div>
 
-                            <div class="form-group">
+                                
+                            <div class="form-group d-flex flex-column">
                                 <asp:Button 
                                     ID="btnTopUp" 
                                     CssClass="btn btn-primary w-100" 
@@ -58,13 +59,11 @@
                                     runat="server" 
                                     OnClick="btnTopUp_Click"
                                     />
-                                <asp:CustomValidator 
-    ID="topupValidator" 
-    runat="server" 
-    ControlToValidate="txtAmount"
-    CssClass="text-danger"
-    Display="Dynamic"
-    ErrorMessage="Please enter a valid amount." />
+                                                            <asp:CustomValidator 
+ID="topupValidator" 
+runat="server" 
+CssClass="text-danger"
+Display="Dynamic" />
                             </div>
 
                         </asp:Panel>

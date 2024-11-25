@@ -23,6 +23,19 @@ namespace Online_Bank_System.account
 
             if (result.Succeeded)
             {
+
+                User newUser = new User
+                {
+                    Email = Email.Text,
+                    Balance = 0,
+                    Name = Name.Text
+                };
+
+                var dbContext = new MyDbContext();
+
+                dbContext.Users.Add(newUser);
+                dbContext.SaveChanges();
+
                 // Uncomment the code below if you want to implement email confirmation.
                 //string code = manager.GenerateEmailConfirmationToken(user.Id);
                 //string callbackUrl = IdentityHelper.GetUserConfirmationRedirectUrl(code, user.Id, Request);

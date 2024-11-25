@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Online_Bank_System
@@ -15,10 +16,10 @@ namespace Online_Bank_System
             string pwd = txtPassword.Text.Trim();
 
             // Server-side validation
-            if (Regex.IsMatch(accountNumber, @"^\d{12}$"))
+            if (Regex.IsMatch(accountNumber, @"^\d$"))
             {
                 // Logic for adding the account (e.g., save to database)
-                Response.Write("<script>alert('Account added successfully.');</script>");
+                //Response.Write("<script>alert('Account added successfully.');</script>");
             }
             else
             {
@@ -57,21 +58,22 @@ namespace Online_Bank_System
             {
                 using (var db = new MyDbContext())
                 {
-
+                    var Id = db.Users.FirstOrDefault(x => x.Email == User.Identity.Name);
                     // Create new account linked to the user
                     Account account = new Account
                     {
                         Type = accountType,
                         Password = password,
                         Balance = 0,
-                        UserId = 1, // user ID
+                        UserId = Id.ID, // user ID
                         IsHidden = false
                     };
                     db.Accounts.Add(account);
                     db.SaveChanges();
                 }
 
-                Response.Write("<script>alert('Account created successfully!');</script>");
+                Response.Redirect("/Top-Up");
+                //Response.Write("<script>alert('Account created successfully!');</script>");
             }
             else
             {

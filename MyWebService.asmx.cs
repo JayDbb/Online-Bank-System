@@ -32,6 +32,48 @@ namespace Online_Bank_System
             return isFound;
         }
 
+        //Top Up Account
+
+        [WebMethod]
+        public bool TopUp(int recipientAccountId, int OwnerAccountID, decimal topUpAmount)
+        {
+            User OwnerAccount = dbContext.Users.FirstOrDefault(a => a.ID == OwnerAccountID);
+            Account recipientAccount = dbContext.Accounts.FirstOrDefault(a => a.UserId == recipientAccountId);
+
+
+            if (recipientAccount == null)
+            {
+                return false;
+            }
+
+            if (OwnerAccount.Balance < topUpAmount)
+            {
+                //topupValidator.ErrorMessage = "Insufficient balance in the sender account.";
+                //ScriptManager.RegisterStartupScript(this, GetType(), "alert", "alert('');", true);
+                return false;
+            }
+
+            // Deduct and credit balances
+            OwnerAccount.Balance -= topUpAmount;
+            recipientAccount.Balance += topUpAmount;
+
+            // Record the transaction
+            var transaction = new Transaction
+            {
+                Amount = topUpAmount,
+                Date = DateTime.Now,
+                SenderAccountID = OwnerAccount.ID,
+                ReceiverAccountID = recipientAccount.ID
+            };
+            dbContext.Transactions.Add(transaction);
+
+            // Save changes
+            dbContext.SaveChanges();
+
+            return true;
+        }
+
+
         // Add an account (assuming the account exists and the password is correct)
         [WebMethod]
         public bool AddAccount(int AccountID, string Password)
