@@ -66,6 +66,7 @@
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Accounts">View Accounts</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Top-Up">Top Up</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/OurWebServices">Make Payment</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Deposit">Deposit</a></li>
                         <%} %>
                         </ul>
                         <asp:LoginView runat="server" ViewStateMode="Disabled">

@@ -28,7 +28,7 @@ namespace Online_Bank_System.account
                 {
                     Email = Email.Text,
                     Balance = 0,
-                    Name = Name.Text
+                    Name = Username.Text
                 };
 
                 var dbContext = new MyDbContext();

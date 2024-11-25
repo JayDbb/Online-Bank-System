@@ -73,7 +73,7 @@ a:hover {
             <asp:Label runat="server" AssociatedControlID="Name"  CssClass="col-md-2 col-form-label">Name</asp:Label>
             <div class="col-md-10">
 
-                <asp:TextBox ID="Name" runat="server" CssClass="form-control" />
+                <asp:TextBox ID="Username" runat="server" CssClass="form-control" />
         
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="Name"
                     CssClass="text-danger" Display="Dynamic" ErrorMessage="The Name field is required." />
