@@ -33,13 +33,13 @@ namespace Online_Bank_System
         protected global::System.Web.UI.WebControls.TextBox txtAccountNumber;
 
         /// <summary>
-        /// cvAccountNumber control.
+        /// accNumValidator control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator cvAccountNumber;
+        protected global::System.Web.UI.WebControls.CustomValidator accNumValidator;
 
         /// <summary>
         /// txtPassword control.
@@ -87,22 +87,13 @@ namespace Online_Bank_System
         protected global::System.Web.UI.WebControls.TextBox newTxtPassword;
 
         /// <summary>
-        /// rfvPassword control.
+        /// cvPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvPassword;
-
-        /// <summary>
-        /// revPassword control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator revPassword;
+        protected global::System.Web.UI.WebControls.CustomValidator cvPassword;
 
         /// <summary>
         /// ddlAccountType control.
@@ -114,13 +105,13 @@ namespace Online_Bank_System
         protected global::System.Web.UI.WebControls.DropDownList ddlAccountType;
 
         /// <summary>
-        /// rfvAccountType control.
+        /// cvAccountType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvAccountType;
+        protected global::System.Web.UI.WebControls.CustomValidator cvAccountType;
 
         /// <summary>
         /// btnCreateAccount control.

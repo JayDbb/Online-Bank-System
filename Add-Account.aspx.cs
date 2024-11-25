@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -16,34 +17,48 @@ namespace Online_Bank_System
             string pwd = txtPassword.Text.Trim();
 
             // Server-side validation
-            if (Regex.IsMatch(accountNumber, @"^\d$"))
-            {
-                // Logic for adding the account (e.g., save to database)
-                //Response.Write("<script>alert('Account added successfully.');</script>");
-            }
-            else
-            {
-                cvAccountNumber.IsValid = false;
-                cvAccountNumber.ErrorMessage = "Account number must be exactly 12 digits.";
-            }
+            
 
             //@"^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$"  
             // Server-side validation
-            if (Regex.IsMatch(pwd, @"^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$"))
+            //if (Regex.IsMatch(pwd, @"^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$"))
+            //{
+            //    // Logic for adding the account (e.g., save to database)
+            //    Response.Write("<script>alert('Account added successfully.');</script>");
+            //}
+            //else
+            //{
+            //    CustomValidatorPassword.IsValid = false;
+            //    CustomValidatorPassword.ErrorMessage = "Password Invalid Format.";
+            //    return;
+            //}
+
+            MyDbContext dbContext = new MyDbContext();
+            int accountNumberInt;
+
+            if (int.TryParse(accountNumber, out accountNumberInt))
             {
-                // Logic for adding the account (e.g., save to database)
-                Response.Write("<script>alert('Account added successfully.');</script>");
+                // Now you can safely use accountNumberInt
+            var foundAccount = dbContext.Accounts.FirstOrDefault(acc => acc.ID == accountNumberInt);
+                if (foundAccount.Password != pwd)
+                {
+                    CustomValidatorPassword.IsValid = false;
+                    CustomValidatorPassword.ErrorMessage = "Password Invalid.";
+                    return;
+                }
+
+                myWebServiceRef.MyWebService ws = new myWebServiceRef.MyWebService();
+
+
+                ws.AddAccount(accountNumberInt, pwd);
             }
             else
             {
-                CustomValidatorPassword.IsValid = false;
-                CustomValidatorPassword.ErrorMessage = "Password Invalid Format.";
-                return;
+                accNumValidator.IsValid = false;
+                accNumValidator.ErrorMessage = "Invalid Account number";
             }
 
-            myWebServiceRef.MyWebService ws = new myWebServiceRef.MyWebService();
-
-            ws.AddAccount(int.Parse(accountNumber), "");
+            Response.Redirect("/Accounts");
         }
 
 
@@ -52,6 +67,21 @@ namespace Online_Bank_System
 
             string password = newTxtPassword.Text.Trim();
             string accountType = ddlAccountType.SelectedValue;
+
+            if (!Regex.IsMatch(password, @"^\\d{4}$"))
+            {
+                cvPassword.IsValid = false;
+                cvPassword.ErrorMessage = "Password must be 4 digits";
+                return;
+            }
+
+            if(accountType == null)
+            {
+                cvAccountType.IsValid = false;
+                return;
+
+            }
+
 
             // Validate data and create account
             if (!string.IsNullOrEmpty(password) && !string.IsNullOrEmpty(accountType))

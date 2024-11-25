@@ -66,7 +66,7 @@ a:hover {
 }
 </style>
 
-        <div class="col-md-8">
+        <div class="col-md-10">
             <section id="loginForm">
                 <div class="row">
                   
@@ -81,15 +81,15 @@ a:hover {
                         <div class="col-md-10">
                             <asp:TextBox runat="server" ID="Email" CssClass="form-control" TextMode="Email" />
                             <asp:RequiredFieldValidator runat="server" ControlToValidate="Email"
-                                CssClass="text-danger" ErrorMessage="The email field is required." />
+                                CssClass="text-danger" Display="Dynamic" ErrorMessage="The email field is required." />
                         </div>
                     </div>
                     <div class="row">
                         <asp:Label runat="server" AssociatedControlID="Password" CssClass="col-md-2 col-form-label">Password</asp:Label>
                         <br />
                         <div class="col-md-10">
-                           <asp:TextBox runat="server" ID="Password" TextMode="Password" CssClass="form-control" /> &nbsp; &nbsp; ;
-                            <asp:RequiredFieldValidator runat="server" ControlToValidate="Password" CssClass="text-danger" ErrorMessage="The password field is required." />
+                           <asp:TextBox runat="server" ID="Password" TextMode="Password" CssClass="form-control" />
+                            <asp:RequiredFieldValidator runat="server" ControlToValidate="Password" CssClass="text-danger" Display="Dynamic" ErrorMessage="The password field is required." />
                         </div>
                     </div>
                     <div class="row">
@@ -102,7 +102,7 @@ a:hover {
                     </div>
                     <div class="row">
                         <div class="col-offset-md-2 col-md-10">
-                            <asp:Button runat="server" OnClick="LogIn" Text="Log in" CssClass="btn btn-outline-dark" />
+                            <asp:Button runat="server" OnClick="LogIn" Text="Log in" CssClass="btn m-0 btn-outline-dark" />
                         </div>
                     </div>
                 </div>

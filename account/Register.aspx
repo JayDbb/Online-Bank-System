@@ -67,7 +67,6 @@ a:hover {
         <p class="text-danger">
             <asp:Literal runat="server" ID="ErrorMessage" />
         </p>
-        <h4>Create a new account</h4>
         <hr />
         <asp:ValidationSummary runat="server" CssClass="text-danger" />
         <div class="row">
@@ -77,7 +76,7 @@ a:hover {
                 <asp:TextBox ID="Name" runat="server" CssClass="form-control" />
         
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="Name"
-                    CssClass="text-danger" ErrorMessage="The Name field is required." />
+                    CssClass="text-danger" Display="Dynamic" ErrorMessage="The Name field is required." />
             </div>
         </div>
         <div class="row">
@@ -87,7 +86,7 @@ a:hover {
                 <asp:TextBox ID="Email" runat="server" CssClass="form-control"  TextMode="Email" />
                 
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="Email"
-                    CssClass="text-danger" ErrorMessage="The email field is required." />
+                    CssClass="text-danger" Display="Dynamic" ErrorMessage="The email field is required." />
             </div>
         </div>
         <div class="row">
@@ -95,7 +94,7 @@ a:hover {
             <div class="col-md-10">
                 <asp:TextBox runat="server" ID="Password" TextMode="Password" CssClass="form-control" />
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="Password"
-                    CssClass="text-danger" ErrorMessage="The password field is required." />
+                    CssClass="text-danger" Display="Dynamic" ErrorMessage="The password field is required." />
             </div>
         </div>
         <div class="row">
@@ -109,8 +108,8 @@ a:hover {
             </div>
         </div>
         <div class="row">
-            <div class="offset-md-2 col-md-10">
-                <asp:Button runat="server" OnClick="CreateUser_Click" Text="Register" CssClass="btn btn-outline-dark" />
+            <div class="col-md-10">
+                <asp:Button runat="server" OnClick="CreateUser_Click" Text="Register" CssClass="m-0 btn btn-outline-dark" />
             </div>
         </div>
     </main>

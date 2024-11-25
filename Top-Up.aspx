@@ -24,7 +24,7 @@
 
                                 <asp:DropDownList 
                                     ID="ddlRecipientAccount" 
-                                    CssClass="form-control" 
+                                    CssClass="form-control m-0" 
                                     runat="server"
                                     AutoPostBack="true" 
                                     OnSelectedIndexChanged="ddlRecipientAccount_SelectedIndexChanged">
@@ -38,7 +38,7 @@
                                 <label for="txtAmount" class="form-label">Amount to Top-Up</label>
                                 <asp:TextBox 
                                     ID="txtAmount" 
-                                    CssClass="form-control" 
+                                    CssClass="form-control m-0" 
                                     runat="server" 
                                     placeholder="Enter amount" />
                                 <asp:CustomValidator 
@@ -54,7 +54,7 @@
                             <div class="form-group d-flex flex-column">
                                 <asp:Button 
                                     ID="btnTopUp" 
-                                    CssClass="btn btn-primary w-100" 
+                                    CssClass="btn btn-primary w-100 m-0" 
                                     Text="Top-Up" 
                                     runat="server" 
                                     OnClick="btnTopUp_Click"

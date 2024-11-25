@@ -22,16 +22,15 @@
                                     CssClass="form-control" 
                                     MaxLength="12" 
                                     runat="server" 
-                                    placeholder="Enter 12-digit account number" />
+                                    placeholder="Enter Account Number" />
                                 <asp:CustomValidator 
-                                    ID="cvAccountNumber" 
-                                    runat="server" 
-                                    ControlToValidate="txtAccountNumber"
-                                    CssClass="text-danger"
-                                            Display="Dynamic"
-
-                                    ErrorMessage="Account number must be exactly 12 digits."
-                                    />
+    ID="accNumValidator" 
+    runat="server" 
+    ControlToValidate="txtAccountNumber"
+    CssClass="text-danger" 
+            Display="Dynamic"
+   />
+                               
                             </div>
                              <div class="form-group mb-3">
     <label for="txtPassword" class="form-label">Password</label>
@@ -48,8 +47,6 @@
         ControlToValidate="txtPassword"
         CssClass="text-danger" 
                 Display="Dynamic"
-
-        ErrorMessage="Password must be between 8 to 12 characters, include at least one number, one uppercase, and one special character."
        />
 </div>
                             <div class="form-group">
@@ -91,21 +88,13 @@
                             MaxLength="12" 
                             runat="server" 
                             placeholder="Enter your password" />
-                        <asp:RequiredFieldValidator 
-                            ID="rfvPassword" 
+                        <asp:CustomValidator 
+                            ID="cvPassword" 
                             runat="server" 
                             ControlToValidate="newTxtPassword"
                             CssClass="text-danger" 
                             Display="Dynamic"
                             ErrorMessage="Password is required." />
-                        <asp:RegularExpressionValidator 
-                            ID="revPassword" 
-                            runat="server" 
-                            ControlToValidate="newTxtPassword"
-                            CssClass="text-danger" 
-                            Display="Dynamic"
-                            ErrorMessage="Password must be 4 Numbers."
-                            ValidationExpression="^\d{4}$" />
                     </div>
 
                     <div class="form-group mb-3">
@@ -118,8 +107,8 @@
                             <asp:ListItem Text="Flow" Value="Flow" />
                             <asp:ListItem Text="Sagicor" Value="Sagicor" />
                         </asp:DropDownList>
-                        <asp:RequiredFieldValidator 
-                            ID="rfvAccountType" 
+                        <asp:CustomValidator 
+                            ID="cvAccountType" 
                             runat="server" 
                             ControlToValidate="ddlAccountType"
                             CssClass="text-danger" 
