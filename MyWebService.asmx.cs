@@ -109,48 +109,52 @@ namespace Online_Bank_System
         [WebMethod]
         public bool SubmitPayment(int senderAccountID, int receiverAccountID, decimal amount, string senderPassword)
         {
-            // Check if both accounts exist
-            var senderAccount = dbContext.Accounts.FirstOrDefault(acc => acc.ID == senderAccountID);
-            var receiverAccount = dbContext.Accounts.FirstOrDefault(acc => acc.ID == receiverAccountID);
-
-            if (senderAccount == null || receiverAccount == null)
+            try
             {
+                var senderAccount = dbContext.Accounts.FirstOrDefault(acc => acc.ID == senderAccountID);
+                var receiverAccount = dbContext.Accounts.FirstOrDefault(acc => acc.ID == receiverAccountID);
+
+                if (senderAccount == null)
+                {
+                    throw new Exception("Sender account not found.");
+                }
+
+                if (receiverAccount == null)
+                {
+                    throw new Exception("Receiver account not found.");
+                }
+
+                if (senderAccount.Password != senderPassword)
+                {
+                    throw new Exception("Invalid password.");
+                }
+
+                if (senderAccount.Balance < amount)
+                {
+                    throw new Exception("Insufficient funds.");
+                }
+
+                senderAccount.Balance -= amount;
+                receiverAccount.Balance += amount;
+
+                var transaction = new Transaction
+                {
+                    Amount = amount,
+                    SenderAccountID = senderAccountID,
+                    ReceiverAccountID = receiverAccountID,
+                    Date = DateTime.Now
+                };
+
+                dbContext.Transactions.Add(transaction);
+                dbContext.SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+                // Returning false for any failure
                 return false;
             }
-
-            if (senderAccount.Password != senderPassword)
-            {
-                return false;
-            }
-
-            if (senderAccount.Balance < amount)
-            {
-                return false;
-            }
-
-            //Payment:
-            senderAccount.Balance -= amount;
-
-            //Add to receiver account
-            receiverAccount.Balance += amount;
-
-            ////Save changes to both accounts
-            //dbContext.Accounts.AddOrUpdate(senderAccount);
-            //dbContext.Accounts.AddOrUpdate(receiverAccount);
-
-            //Transaction record
-            Transaction transaction = new Transaction
-            {
-                Amount = amount,
-                SenderAccountID = senderAccountID,
-                ReceiverAccountID = receiverAccountID,
-                Date = DateTime.Now
-            };
-
-            dbContext.Transactions.Add(transaction);
-            dbContext.SaveChanges();
-
-            return true;
         }
     }
 }
